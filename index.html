@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <title>Room for Rent - ផ្ទះជួល</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Khmer+OS+Battambang:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', 'Khmer OS Battambang', Arial, sans-serif;
+            background-color: #f0f2f5; /* A very light, professional gray */
+            color: #333; /* Darker text for better contrast */
+        }
+
+        /* Overall container styling */
+        .app-container {
+            border-radius: 1.5rem; /* More pronounced rounded corners */
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Deeper, softer shadow */
+            transition: all 0.3s ease-in-out;
+            /* Ensure it takes full width on small screens, then max-w on larger */
+            width: 100%;
+            max-width: 100%; /* Default to full width on smallest screens */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .app-container {
+                max-width: 600px; /* Example max-width for small tablets */
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .app-container {
+                max-width: 768px; /* Example max-width for larger tablets */
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .app-container {
+                max-width: 1280px; /* Max width for desktop */
+            }
+        }
+        .app-container:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Slightly more prominent on hover */
+        }
+
+        /* Input form section */
+        .input-form-section {
+            background-color: #ffffff;
+            padding: 1.5rem; /* Reduced padding for very small screens */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .input-form-section {
+                padding: 2rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .input-form-section {
+                padding: 3rem;
+                border-right: 1px solid #e0e0e0; /* Subtle separator */
+            }
+        }
+
+        /* Display section */
+        .ad-display-section {
+            background-color: #fdfdfd; /* Very light background for the ad preview */
+            padding: 1.5rem; /* Reduced padding for very small screens */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .ad-display-section {
+                padding: 2rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .ad-display-section {
+                padding: 3rem;
+            }
+        }
+
+        /* Headings */
+        h2, h3 {
+            font-weight: 700; /* Bold headings */
+            color: #2c3e50; /* Dark blue-gray for titles */
+        }
+        .input-form-section h2 {
+            color: #28a745; /* Professional green for input title */
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem; /* Adjusted font size for mobile */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .input-form-section h2 {
+                font-size: 2rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .input-form-section h2 {
+                font-size: 2.5rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .ad-display-section .header h1 {
+            color: #2c3e50;
+            font-size: 1.5rem; /* Adjusted font size for mobile */
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .ad-display-section .header h1 {
+                font-size: 1.75rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .ad-display-section .header h1 {
+                font-size: 2rem;
+                margin-bottom: 0.75rem;
+            }
+        }
+
+        .ad-display-section .header p {
+            color: #6c757d; /* Muted gray for sub-text */
+            font-size: 0.85rem; /* Adjusted font size for mobile */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .ad-display-section .header p {
+                font-size: 0.95rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .ad-display-section .header p {
+                font-size: 1.05rem;
+            }
+        }
+
+
+        /* Form group styling */
+        .form-group label {
+            color: #495057; /* Slightly darker gray for labels */
+            font-weight: 600; /* Semi-bold labels */
+            margin-bottom: 0.3rem; /* Adjusted margin for mobile */
+            font-size: 0.85rem; /* Adjusted font size for mobile */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .form-group label {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .currency-symbol {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* Ad preview styling */
+        .ad-preview {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem; /* Adjusted padding for mobile */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Soft shadow for the preview card */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .ad-preview {
+                padding: 2rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .ad-preview {
+                padding: 2.5rem;
+            }
+        }
+
+        .section {
+            margin-bottom: 1.25rem; /* Adjusted space between sections for mobile */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .section {
+                margin-bottom: 1.5rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .section {
+                margin-bottom: 2rem;
+            }
+        }
+
+        .section h3 {
+            font-size: 1.1rem; /* Adjusted section title size for mobile */
+            border-bottom: 2px solid #e9ecef; /* Thicker, cleaner border */
+            padding-bottom: 0.5rem; /* Adjusted padding */
+            margin-bottom: 0.8rem; /* Adjusted margin */
+            color: #34495e; /* Slightly darker section titles */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .section h3 {
+                font-size: 1.25rem;
+                padding-bottom: 0.6rem;
+                margin-bottom: 1rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .section h3 {
+                font-size: 1.35rem;
+                padding-bottom: 0.8rem;
+                margin-bottom: 1.2rem;
+            }
+        }
+
+        .info-table td {
+            padding-top: 0.5rem; /* Adjusted padding */
+            padding-bottom: 0.5rem; /* Adjusted padding */
+            font-size: 0.9rem; /* Adjusted font size for mobile */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .info-table td {
+                padding-top: 0.6rem;
+                padding-bottom: 0.6rem;
+                font-size: 0.95rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .info-table td {
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+                font-size: 1rem;
+            }
+        }
+
+        .info-table .label {
+            font-weight: 600;
+            color: #555;
+        }
+        .ad-preview .text-gray-900 {
+            color: #333; /* Ensure main text is dark */
+        }
+        .ad-preview .text-green-600 {
+            color: #28a745; /* Professional green for prices */
+        }
+        .ad-preview .text-green-700 {
+            color: #218838; /* Darker green for total costs */
+        }
+        #adAmenities li {
+            list-style: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 0.3rem;
+            color: #555;
+            font-size: 0.9rem; /* Adjusted font size for mobile */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            #adAmenities li {
+                font-size: 0.95rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            #adAmenities li {
+                font-size: 1rem;
+            }
+        }
+
+        /* Print button styling */
+        .print-btn {
+            background-color: #28a745; /* Professional green */
+            padding: 0.7rem 1.2rem; /* Adjusted padding for mobile */
+            font-size: 0.95rem; /* Adjusted font size for mobile */
+            font-weight: 600;
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3); /* Green shadow */
+            transition: all 0.3s ease-in-out;
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .print-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .print-btn {
+                padding: 0.9rem 1.8rem;
+                font-size: 1.1rem;
+            }
+        }
+        .print-btn:hover {
+            background-color: #218838; /* Darker green on hover */
+            box-shadow: 0 7px 20px rgba(40, 167, 69, 0.4);
+            transform: translateY(-2px);
+        }
+        .print-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.2);
+        }
+
+        /* Print-specific styles */
+        @media print {
+            .input-form-section, .print-btn, .no-print-element {
+                display: none !important;
+            }
+            .app-container {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                flex-direction: column !important;
+                width: 100% !important;
+                max-width: none !important;
+            }
+            .ad-display-section {
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                background-color: #fff !important;
+            }
+            .ad-preview {
+                border: 0 !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+            }
+            body {
+                background-color: #fff !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased p-4 sm:p-6 lg:p-8">
+    <div class="app-container bg-white rounded-xl shadow-lg mx-auto flex flex-col lg:flex-row">
+
+        <div class="input-form-section lg:w-1/2">
+            <h2 class="font-bold text-green-700 text-center">បញ្ចូលព័ត៌មានបន្ទប់ជួល</h2>
+            <p class="text-gray-600 text-center mb-6">Enter Room for Rent Information</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3 sm:gap-x-6 sm:gap-y-4">
+                <div class="form-group md:col-span-2">
+                    <label for="roomTitle" class="block text-sm font-medium text-gray-700 mb-1.5">ចំណងជើង (Title)</label>
+                    <input type="text" id="roomTitle" value="បន្ទប់ជួល" oninput="generateAd()"
+                           class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div class="form-group">
+                    <label for="price" class="block text-sm font-medium text-gray-700 mb-1.5">តម្លៃជួល (Rent Price)</label>
+                    <div class="relative">
+                        <input type="number" id="price" value="150" step="1" oninput="generateAd()"
+                               class="w-full pl-4 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                        <span class="currency-symbol absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="currency" class="block text-sm font-medium text-gray-700 mb-1.5">រូបិយប័ណ្ណ (Currency)</label>
+                    <div class="relative">
+                        <select id="currency" onchange="generateAd()"
+                                class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm appearance-none focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                            <option value="USD">USD - ដុល្លារអាមេរិក</option>
+                            <option value="KHR">KHR - រៀលខ្មែរ</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group md:col-span-2">
+                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1.5">អាសយដ្ឋាន (Address)</label>
+                    <input type="text" id="address" value="ផ្ទះលេខ 123, ផ្លូវ 456, សង្កាត់បឹងកេងកងទី១, ខណ្ឌបឹងកេងកង, រាជធានីភ្នំពេញ" oninput="generateAd()"
+                           class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div class="form-group">
+                    <label for="roomType" class="block text-sm font-medium text-gray-700 mb-1.5">ប្រភេទបន្ទប់ (Room Type)</label>
+                    <input type="text" id="roomType" value="បន្ទប់ស្ទូឌីយោ (Studio Room)" oninput="generateAd()"
+                           class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div class="form-group">
+                    <label for="size" class="block text-sm font-medium text-gray-700 mb-1.5">ទំហំ (Size)</label>
+                    <input type="text" id="size" value="20 ម៉ែត្រការ៉េ (20 sqm)" oninput="generateAd()"
+                           class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div class="form-group md:col-span-2">
+                    <label for="amenities" class="block text-sm font-medium text-gray-700 mb-1.5">គ្រឿងបរិក្ខារ (Amenities)</label>
+                    <textarea id="amenities" oninput="generateAd()" rows="3"
+                              class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+- ម៉ាស៊ីនត្រជាក់ (Air Conditioner)
+- បន្ទប់ទឹកផ្ទាល់ខ្លួន (Private Bathroom)
+- គ្រែ (Bed)
+- ទូខោអាវ (Wardrobe)
+- តុ (Table) & កៅអី (Chair)
+- Wi-Fi ល្បឿនលឿន (High-speed Wi-Fi)
+- កន្លែងចតម៉ូតូ (Motorcycle Parking)
+</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="electricityRateKhrPerKwh" class="block text-sm font-medium text-gray-700 mb-1.5">តម្លៃអគ្គិសនី/គីឡូវ៉ាត់ម៉ោង (Electricity Rate/kWh)</label>
+                    <div class="relative">
+                        <input type="number" id="electricityRateKhrPerKwh" value="1000" step="1" oninput="generateAd()"
+                               class="w-full pl-4 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                        <span class="currency-symbol absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">៛/kWh</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="electricityUsageKwh" class="block text-sm font-medium text-gray-700 mb-1.5">ការប្រើប្រាស់អគ្គិសនីប៉ាន់ស្មាន (kWh)</label>
+                    <div class="relative">
+                        <input type="number" id="electricityUsageKwh" value="50" step="1" oninput="generateAd()"
+                               class="w-full pl-4 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                        <span class="currency-symbol absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">kWh</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="waterRateKhrPerCubicMeter" class="block text-sm font-medium text-gray-700 mb-1.5">តម្លៃទឹក/ម៉ែត្រគូប (Water Rate/m³)</label>
+                    <div class="relative">
+                        <input type="number" id="waterRateKhrPerCubicMeter" value="2000" step="1" oninput="generateAd()"
+                               class="w-full pl-4 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                        <span class="currency-symbol absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">៛/m³</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="waterUsageCubicMeter" class="block text-sm font-medium text-gray-700 mb-1.5">ការប្រើប្រាស់ទឹកប៉ាន់ស្មាន (m³)</label>
+                    <div class="relative">
+                        <input type="number" id="waterUsageCubicMeter" value="10" step="1" oninput="generateAd()"
+                               class="w-full pl-4 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                        <span class="currency-symbol absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">m³</span>
+                    </div>
+                </div>
+
+                <div class="form-group md:col-span-2">
+                    <label for="contactPerson" class="block text-sm font-medium text-gray-700 mb-1.5">អ្នកទំនាក់ទំនង (Contact Person)</label>
+                    <input type="text" id="contactPerson" value="លោក/លោកស្រី សុខា" oninput="generateAd()"
+                           class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div class="form-group md:col-span-2">
+                    <label for="contactPhone" class="block text-sm font-medium text-gray-700 mb-1.5">លេខទូរស័ព្ទទំនាក់ទំនង (Contact Phone)</label>
+                    <input type="text" id="contactPhone" value="012 345 678" oninput="generateAd()"
+                           class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+                </div>
+
+                <div class="form-group md:col-span-2">
+                    <label for="notes" class="block text-sm font-medium text-gray-700 mb-1.5">ចំណាំ/លក្ខខណ្ឌផ្សេងៗ (Notes/Other Conditions)</label>
+                    <textarea id="notes" oninput="generateAd()" rows="2"
+                              class="w-full px-4 py-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 shadow-sm placeholder-gray-400 focus:outline-none focus:border-green-500 transition duration-200 ease-in-out">
+- ស្ងប់ស្ងាត់ សុវត្ថិភាព និងមានផាសុកភាព (Quiet, safe, and comfortable environment)
+- ជិតផ្សារ សាលារៀន និងមន្ទីរពេទ្យ (Close to market, school, and hospital)
+</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-display-section lg:w-1/2 flex flex-col justify-between">
+            <div class="ad-preview bg-white rounded-lg">
+                <div class="header text-center mb-8 pb-4 border-b border-gray-200">
+                    <h1 id="adTitle" class="font-bold text-gray-900 mb-2">បន្ទប់ជួលទំនេរ មានម៉ាស៊ីនត្រជាក់ និងបន្ទប់ទឹកក្នុង</h1>
+                    <p id="adPrice" class="text-2xl font-semibold text-green-600 mb-4"></p>
+                    <p id="adAddress" class="text-base text-gray-600"></p>
+                </div>
+
+                <div class="section mb-6">
+                    <h3 class="font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">ព័ត៌មានលម្អិតបន្ទប់ (Room Details)</h3>
+                    <table class="info-table w-full text-base">
+                        <tr class="border-b border-gray-100"><td class="label font-medium text-gray-700 py-2 px-0">ប្រភេទបន្ទប់:</td><td id="adRoomType" class="py-2 px-0 text-gray-900"></td></tr>
+                        <tr><td class="label font-medium text-gray-700 py-2 px-0">ទំហំ:</td><td id="adSize" class="py-2 px-0 text-gray-900"></td></tr>
+                    </table>
+                </div>
+
+                <div class="section mb-6">
+                    <h3 class="font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">គ្រឿងបរិក្ខារ (Amenities)</h3>
+                    <ul id="adAmenities" class="text-gray-900 leading-relaxed pl-4"></ul>
+                </div>
+
+                <div class="section mb-6">
+                    <h3 class="font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">ថ្លៃសេវា (Utilities)</h3>
+                    <table class="info-table w-full text-base">
+                        <tr class="border-b border-gray-100"><td class="label font-medium text-gray-700 py-2 px-0">តម្លៃអគ្គិសនី/គីឡូវ៉ាត់ម៉ោង:</td><td id="adElectricityRate" class="py-2 px-0 text-gray-900"></td></tr>
+                        <tr class="border-b border-gray-100"><td class="label font-medium text-gray-700 py-2 px-0">ការប្រើប្រាស់អគ្គិសនីប៉ាន់ស្មាន (kWh):</td><td id="adElectricityUsage" class="py-2 px-0 text-gray-900"></td></tr>
+                        <tr class="border-b border-gray-100"><td class="label font-medium text-gray-700 py-2 px-0">ថ្លៃអគ្គិសនីប៉ាន់ស្មាន:</td><td id="adTotalElectricityCost" class="py-2 px-0 text-gray-900 font-semibold text-green-700"></td></tr>
+                        <tr class="border-b border-gray-100"><td class="label font-medium text-gray-700 py-2 px-0">តម្លៃទឹក/ម៉ែត្រគូប:</td><td id="adWaterRate" class="py-2 px-0 text-gray-900"></td></tr>
+                        <tr class="border-b border-gray-100"><td class="label font-medium text-gray-700 py-2 px-0">ការប្រើប្រាស់ទឹកប៉ាន់ស្មាន (m³):</td><td id="adWaterUsage" class="py-2 px-0 text-gray-900"></td></tr>
+                        <tr><td class="label font-medium text-gray-700 py-2 px-0">ថ្លៃទឹកប៉ាន់ស្មាន:</td><td id="adTotalWaterCost" class="py-2 px-0 text-gray-900 font-semibold text-green-700"></td></tr>
+                    </table>
+                </div>
+
+                <div class="section mb-6">
+                    <h3 class="font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">ទំនាក់ទំនង (Contact)</h3>
+                    <table class="info-table w-full text-base">
+                        <tr class="border-b border-gray-100"><td class="label font-medium text-gray-700 py-2 px-0">ឈ្មោះ:</td><td id="adContactPerson" class="py-2 px-0 text-gray-900"></td></tr>
+                        <tr><td class="label font-medium text-gray-700 py-2 px-0">លេខទូរស័ព្ទ:</td><td id="adContactPhone" class="py-2 px-0 text-gray-900"></td></tr>
+                    </table>
+                </div>
+
+                <div class="section mb-6">
+                    <h3 class="font-semibold text-gray-800 mb-4 pb-2 border-b border-gray-200">ចំណាំ (Notes)</h3>
+                    <div id="adNotes" class="text-gray-900 leading-relaxed"></div>
+                </div>
+
+                <div class="footer text-center mt-12 pt-4 border-t border-gray-200 text-xs text-gray-500">
+                    សូមទំនាក់ទំនងមកយើងខ្ញុំឥឡូវនេះ!
+                </div>
+            </div>
+
+            <button class="print-btn w-full text-white rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200 mt-8 no-print-element" onclick="window.print()">
+                 បោះពុម្ពការផ្សាយ (Print Advertisement)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function getCurrencySymbol(currencyCode) {
+            switch (currencyCode) {
+                case 'USD': return '$';
+                case 'KHR': return '៛';
+                default: return '';
+            }
+        }
+
+        function formatNumber(num) {
+            if (isNaN(num)) return '0';
+            // Use 'km-KH' locale for Khmer number formatting if available, fallback to 'en-US'
+            return num.toLocaleString('km-KH', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+        }
+
+        function generateAd() {
+            const roomTitle = document.getElementById('roomTitle').value;
+            const price = parseFloat(document.getElementById('price').value);
+            const currency = document.getElementById('currency').value;
+            const address = document.getElementById('address').value;
+            const roomType = document.getElementById('roomType').value;
+            const size = document.getElementById('size').value;
+            const amenities = document.getElementById('amenities').value;
+
+            const electricityRateKhrPerKwh = parseFloat(document.getElementById('electricityRateKhrPerKwh').value);
+            const electricityUsageKwh = parseFloat(document.getElementById('electricityUsageKwh').value);
+            const waterRateKhrPerCubicMeter = parseFloat(document.getElementById('waterRateKhrPerCubicMeter').value);
+            const waterUsageCubicMeter = parseFloat(document.getElementById('waterUsageCubicMeter').value);
+
+            const contactPerson = document.getElementById('contactPerson').value;
+            const contactPhone = document.getElementById('contactPhone').value;
+            const notes = document.getElementById('notes').value;
+
+            // Calculate total electricity and water costs
+            const totalElectricityCost = isNaN(electricityRateKhrPerKwh) || isNaN(electricityUsageKwh) ? 0 : electricityRateKhrPerKwh * electricityUsageKwh;
+            const totalWaterCost = isNaN(waterRateKhrPerCubicMeter) || isNaN(waterUsageCubicMeter) ? 0 : waterRateKhrPerCubicMeter * waterUsageCubicMeter;
+
+            document.getElementById('adTitle').textContent = roomTitle;
+            document.getElementById('adPrice').textContent = `${formatNumber(price)}${getCurrencySymbol(currency)} / ខែ`;
+            document.getElementById('adAddress').textContent = address;
+            document.getElementById('adRoomType').textContent = roomType;
+            document.getElementById('adSize').textContent = size;
+
+            // Format amenities as an unordered list
+            document.getElementById('adAmenities').innerHTML = amenities.split('\n').map(item => {
+                const trimmedItem = item.trim();
+                return trimmedItem ? `<li class="mb-1">${trimmedItem}</li>` : '';
+            }).join('');
+
+            document.getElementById('adElectricityRate').textContent = `${formatNumber(electricityRateKhrPerKwh)} ៛/kWh`;
+            document.getElementById('adElectricityUsage').textContent = `${formatNumber(electricityUsageKwh)} kWh`;
+            document.getElementById('adTotalElectricityCost').textContent = `${formatNumber(totalElectricityCost)} ៛`;
+
+            document.getElementById('adWaterRate').textContent = `${formatNumber(waterRateKhrPerCubicMeter)} ៛/m³`;
+            document.getElementById('adWaterUsage').textContent = `${formatNumber(waterUsageCubicMeter)} m³`;
+            document.getElementById('adTotalWaterCost').textContent = `${formatNumber(totalWaterCost)} ៛`;
+
+            document.getElementById('adContactPerson').textContent = contactPerson;
+            document.getElementById('adContactPhone').textContent = contactPhone;
+            document.getElementById('adNotes').textContent = notes;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateAd();
+        });
+    </script>
+</body>
+</html>
